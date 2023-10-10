@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置整合mybatis -->
+    <!-- 1.关联数据库文件 -->
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <!-- 2.数据库连接池 -->
+    <!--数据库连接池
+        dbcp 半自动化操作 不能自动连接
+        c3p0 自动化操作（自动的加载配置文件 并且设置到对象里面）
+    -->
+    <!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+    <!--        &lt;!&ndash; 配置连接池属性 &ndash;&gt;-->
+    <!--        <property name="driverClass" value="${jdbc.driver}"/>-->
+    <!--        <property name="jdbcUrl" value="${jdbc.url}"/>-->
+    <!--        <property name="user" value="${jdbc.username}"/>-->
+    <!--        <property name="password" value="${jdbc.password}"/>-->
+
+    <!--        &lt;!&ndash; c3p0连接池的私有属性 &ndash;&gt;-->
+    <!--        <property name="maxPoolSize" value="20"/>-->
+    <!--        <property name="minPoolSize" value="5"/>-->
+    <!--        &lt;!&ndash; 关闭连接后不自动commit &ndash;&gt;-->
+    <!--        <property name="autoCommitOnClose" value="false"/>-->
+    <!--        &lt;!&ndash; 获取连接超时时间 &ndash;&gt;-->
+    <!--        <property name="checkoutTimeout" value="10000"/>-->
+    <!--        &lt;!&ndash; 当获取连接失败重试次数 &ndash;&gt;-->
+    <!--        <property name="acquireRetryAttempts" value="2"/>-->
+    <!--    </bean>-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--驱动类名 -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <!-- url -->
+        <property name="url" value="${jdbc.url}"/>
+        <!-- 用户名 -->
+        <property name="username" value="${jdbc.username}"/>
+        <!-- 密码 -->
+        <property name="password" value="${jdbc.password}"/>
+        <!--初始化连接大小-->
+        <property name="initialSize" value="5"/>
+        <!--连接池最大使用连接数量-->
+        <property name="maxActive" value="20"/>
+        <!--获取连接最大等待时间-->
+        <property name="maxWait" value="600000"/>
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+    <!--2 配置druid数据源 -->
+    <!--    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">-->
+    <!--        &lt;!&ndash;驱动类名 &ndash;&gt;-->
+    <!--        <property name="driverClassName" value="${jdbc.driver}" />-->
+    <!--        &lt;!&ndash; url &ndash;&gt;-->
+    <!--        <property name="url" value="${jdbc.url}" />-->
+    <!--        &lt;!&ndash; 用户名 &ndash;&gt;-->
+    <!--        <property name="username" value="${jdbc.username}" />-->
+    <!--        &lt;!&ndash; 密码 &ndash;&gt;-->
+    <!--        <property name="password" value="${jdbc.password}" />-->
+    <!--        &lt;!&ndash;初始化连接大小&ndash;&gt;-->
+    <!--        <property name="initialSize" value="5"/>-->
+    <!--        &lt;!&ndash;连接池最大使用连接数量&ndash;&gt;-->
+    <!--        <property name="maxActive" value="20"/>-->
+    <!--        &lt;!&ndash;获取连接最大等待时间&ndash;&gt;-->
+    <!--        <property name="maxWait" value="60000"/>-->
+    <!--        <property name="validationQuery" value="select 1 from dual"/>-->
+
+    <!--        <property name="testOnBorrow" value="false"/>-->
+    <!--        <property name="testOnReturn" value="false"/>-->
+    <!--        <property name="testWhileIdle" value="true"/>-->
+    <!--        &lt;!&ndash;配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒&ndash;&gt;-->
+    <!--        <property name="timeBetweenEvictionRunsMillis" value="60000"/>-->
+    <!--        &lt;!&ndash;配置一个连接在池中最小生存的时间。单位是毫秒&ndash;&gt;-->
+    <!--        <property name="minEvictableIdleTimeMillis" value="25200000"/>-->
+    <!--        &lt;!&ndash;打开removeAbandoned功能&ndash;&gt;-->
+    <!--        <property name="removeAbandoned" value="true"/>-->
+    <!--        &lt;!&ndash;1800秒 &ndash;&gt;-->
+    <!--        <property name="removeAbandonedTimeout" value="1800"/>-->
+    <!--        &lt;!&ndash;关闭abandoned连接是输出错误日志&ndash;&gt;-->
+    <!--        <property name="logAbandoned" value="true"/>-->
+    <!--        &lt;!&ndash;监控数据库&ndash;&gt;-->
+    <!--        <property name="filters" value="mergeStat"/>-->
+
+    <!--        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--            &lt;!&ndash;驱动类名 &ndash;&gt;-->
+    <!--            <property name="driverClassName" value="${jdbc.driver}" />-->
+    <!--            &lt;!&ndash; url &ndash;&gt;-->
+    <!--            <property name="url" value="${jdbc.url}" />-->
+    <!--            &lt;!&ndash; 用户名 &ndash;&gt;-->
+    <!--            <property name="username" value="${jdbc.username}" />-->
+    <!--            &lt;!&ndash; 密码 &ndash;&gt;-->
+    <!--            <property name="password" value="${jdbc.password}" />-->
+    <!--        </bean>-->
+    <!--    <bean id="jdbcTemplateObject" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--        <constructor-arg ref="dataSource"/>-->
+    <!--    </bean>-->
+
+    <!-- 3.配置SqlSessionFactory对象 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <!-- 4.配置扫描Dao接口包，动态实现Dao接口注入到spring容器中 -->
+    <!--解释 ：https://www.cnblogs.com/jpfss/p/7799806.html-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出需要扫描Dao接口包 -->
+        <property name="basePackage" value="com.lu.mapper"/>
+    </bean>
+
+</beans>
